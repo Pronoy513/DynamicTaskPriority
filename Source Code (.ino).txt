@@ -1,0 +1,222 @@
+#include <Keypad.h>
+
+const uint8_t ROWS = 4;
+const uint8_t COLS = 4;
+char keys[ROWS][COLS] = {
+  { '1', '2', '3', 'A' },
+  { '4', '5', '6', 'B' },
+  { '7', '8', '9', 'C' },
+  { '*', '0', '#', 'D' }
+};
+
+uint8_t colPins[COLS] = { 27, 14, 12, 13 }; // Pins connected to C1, C2, C3, C4
+uint8_t rowPins[ROWS] = { 32, 33, 25, 26 }; // Pins connected to R1, R2, R3, R4
+
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+
+#define LED1 18
+#define LED2 5
+#define LED3 4
+
+
+
+TaskHandle_t TaskHandle_1;
+TaskHandle_t TaskHandle_2;
+TaskHandle_t TaskHandle_3;
+
+void TaskBlink( void *pvParameters );
+void TaskAnalogReadA3( void *pvParameters );
+void aa( void *pvParameters );
+void user_ip(void *pvParameters);
+
+void setup() {
+  Serial.begin(115200);
+
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+
+
+
+  xTaskCreatePinnedToCore(
+    Task_1
+    ,  "Task-1"  
+    ,  1024  
+    ,  NULL
+    ,  3  
+    ,  &TaskHandle_1 
+    ,  1
+  );
+
+  xTaskCreatePinnedToCore(
+    Task_2
+    ,  "Task-2"  
+    ,  1024  
+    ,  NULL
+    ,  2  
+    ,  &TaskHandle_2 
+    ,  1
+  );
+
+      xTaskCreatePinnedToCore(
+    Task_3
+    ,  "Task-3"  
+    ,  1024  
+    ,  NULL
+    ,  1 
+    ,  &TaskHandle_3
+    ,  1
+  );
+
+xTaskCreatePinnedToCore(
+    user_ip
+    ,  "Dynamic_User_Input"
+    ,  1024  
+    ,  NULL
+    ,  2 
+    ,  NULL
+    ,  0
+  );
+
+}
+
+
+
+void loop()
+{
+}
+
+void Task_1(void *pvParameters)  // Task1 Definition
+{
+  while(1)
+  {
+    digitalWrite(LED1, HIGH);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, LOW);
+  
+   
+    Serial.println(F("Task 1")); 
+    vTaskDelay(500); 
+   
+  }
+}
+
+void Task_2(void *pvParameters)  // Task2 Definition
+{
+
+ while(1)
+ { 
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, HIGH);
+    digitalWrite(LED3, LOW);
+
+    Serial.println(F("Task 2"));
+    
+    vTaskDelay(500);  
+  }
+}
+
+void Task_3(void *pvParameters)   // Task3 Definition
+{
+
+  while(1){
+    digitalWrite(LED1, LOW);
+    digitalWrite(LED2, LOW);
+    digitalWrite(LED3, HIGH);
+
+  
+    Serial.println(F("Task 3"));
+    
+    vTaskDelay(500);  
+  }
+}
+
+void user_ip(void *pvParameters){
+  while(1){
+
+  char key = keypad.getKey();
+
+  if (key != NO_KEY) {
+    Serial.print("You have chosen mode: ");
+    Serial.println(key);
+vTaskSuspend(TaskHandle_1);
+vTaskSuspend(TaskHandle_2);
+vTaskSuspend(TaskHandle_3);
+    switch(key){
+      case '1':
+      sched1();
+      break;
+      case '2':
+      sched2();
+      break;
+      case '3':
+      sched3();
+      break;
+      case '4':
+      sched4();
+      break;
+      case '5':
+      sched5();
+      break;
+      case '6':
+      sched6();
+      break;
+      default:
+      Serial.println(F("Sorry, try again!"));
+    }
+vTaskResume(TaskHandle_1);
+vTaskResume(TaskHandle_2);
+vTaskResume(TaskHandle_3);
+  }
+
+}
+}
+
+static void sched1()
+{
+    Serial.println(F("Changing Priority of Tasks"));
+   vTaskPrioritySet(TaskHandle_1,1);  
+   vTaskPrioritySet(TaskHandle_2,2);
+   vTaskPrioritySet(TaskHandle_3,3);   
+   }
+
+   static void sched2()
+{
+    Serial.println(F("Changing Priority of Tasks"));
+   vTaskPrioritySet(TaskHandle_1,1);  
+   vTaskPrioritySet(TaskHandle_2,3);
+   vTaskPrioritySet(TaskHandle_3,2);   
+   }
+
+   static void sched3()
+{
+    Serial.println(F("Changing Priority of Tasks"));
+   vTaskPrioritySet(TaskHandle_1,2);  
+   vTaskPrioritySet(TaskHandle_2,1);
+   vTaskPrioritySet(TaskHandle_3,3);   
+   }
+
+   static void sched4()
+{
+    Serial.println(F("Changing Priority of Tasks"));
+   vTaskPrioritySet(TaskHandle_1,2);  
+   vTaskPrioritySet(TaskHandle_2,3);
+   vTaskPrioritySet(TaskHandle_3,1);   
+   }
+
+   static void sched5()
+{
+    Serial.println(F("Changing Priority of Tasks"));
+   vTaskPrioritySet(TaskHandle_1,3);  
+   vTaskPrioritySet(TaskHandle_2,1);
+   vTaskPrioritySet(TaskHandle_3,2);   
+   }
+
+   static void sched6()
+{
+    Serial.println(F("Changing Priority of Tasks"));
+   vTaskPrioritySet(TaskHandle_1,3);  
+   vTaskPrioritySet(TaskHandle_2,2);
+   vTaskPrioritySet(TaskHandle_3,1);   
+   }
