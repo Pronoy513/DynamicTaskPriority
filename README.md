@@ -1,13 +1,33 @@
+
+
 # DynamicTaskPriority
+Welcome to the DynamicTaskPriority project! This repository is created to host this project's necessary codebase and documentation. This project was developed as part of the Operating System course, by the team members:
+1. [Pronoy (2021503539)](https://github.com/Pronoy513)
+2. [Fowzaan (2021503017)](https://github.com/gitzaan)
+3. [Roshni (2021503548)](https://github.com/RoshniNaga)
+4. [Sachin (2021503043)](https://github.com/SachinSarv1473)
 
-This project is created for working on https://wokwi.com/, and uses its  hardware & libraries for running.
 
-The goal of the project is to create a reliable and efficient system that can change the priority order of its tasks in real
-time, allowing the user to take real-time factors into consideration and manually reorder
-the priority of tasks to ensure that the best course of action is taken in the current scenario.
 
-This uses an ESP32 processor to run the program, and additional hardware, i.e., keypad, breadboard, and LED, all of which provided by Wokwi Simulator.
-FreeRTOS, a very popular real-time operating system and its libraries, manage the lower level components on the ESP32, and is extensively used
-throughout the project for task handling.
 
-The complete implementation of the project can be found through the link: https://wokwi.com/projects/365685910771785729
+## Project Overview
+The primary objective of this project is to develop a robust and efficient system capable of dynamically adjusting the priority order of tasks in real-time. By doing so, users gain the ability to respond to real-time factors and manually reorganize task priorities, ensuring optimal decision-making in the current scenario.
+
+This project is developed to be simulated on [Wokwi](https://wokwi.com/) and utilizes its hardware & libraries for running.
+
+## Hardware and Components
+- ESP32 Processor
+- Keypad
+- Breadboard
+- LED
+- Wires
+
+
+## Technology Stack
+This project leverages the power of the ESP32 processor and relies on the FreeRTOS real-time operating system along with its libraries. FreeRTOS is a widely used platform for managing lower-level components on microprocessors like ESP32 and plays a crucial role in task handling throughout the project.
+
+## Project Implementation
+For a complete look at the project's final code and implementation, please visit the following [link](https://wokwi.com/projects/365685910771785729).
+
+## Contributing
+Feel free to explore the code, contribute, or provide feedback, while following community guidelines. Happy coding! 
